@@ -51,43 +51,43 @@
                 <div class="row">
                   <div class="col-md-12">
                     <div class="section-heading">
-                      <p><a href="login.jsp">Back</a></p>
+                      <p><a href="signup.jsp">Back</a></p>
                     <h2>Sign Up</h2>
                     </div>
-                    <form id="contact" action="" method="post">
+                    <form id="signup" name="signup" action="CustomerController?action=signup" method="post">
                       <div class="row">
                         <div class="col-md-6">
                           <fieldset>
-                            <input name="username" type="text" class="form-control" id="name" placeholder="Username" required="">
+                            <input type="text" class="form-control" id="username" name="username" placeholder="Username" required="">
                           </fieldset>
                         </div>
                         <div class="col-md-6">
                           <fieldset>
-                            <input name="cust_name" type="text" class="form-control" id="name" placeholder="Name" required="">
+                            <input  type="text" class="form-control" id="cust_name" name="cust_name" placeholder="Name" required="">
                           </fieldset>
                         </div>
                         <div class="col-md-6">
                           <fieldset>
-                            <input name="cust_email" type="text" class="form-control" id="email" placeholder="Email" required="">
+                            <input type="text" class="form-control" id="cust_email" name="cust_email" placeholder="Email" required="">
                           </fieldset>
                         </div>
                         <div class="col-md-6">
                           <fieldset>
-                            <input name="password" type="password" class="form-control" id="name" placeholder="Password" required="">
+                            <input type="password" class="form-control" id="password" name="password" placeholder="Password" onChange="onChange()" required="">
                           </fieldset>
                         </div>
                         <div class="col-md-6">
                           <fieldset>
-                            <input name="cust_phoneNo" type="text" class="form-control" id="name" placeholder="Phone Number" required="">
+                            <input type="text" class="form-control" id="cust_phoneNo" name="cust_phoneNo" placeholder="Phone Number" required="">
                           </fieldset>
                         </div>
                         <div class="col-md-6">
                           <fieldset>
-                            <input name="confirm_password" type="text" class="form-control" id="name" placeholder="Confirm Password" required="">
+                            <input type="password" class="form-control" id="confirm" name="confirm" placeholder="Confirm Password" onChange="onChange()" required="">
                           </fieldset>
                         </div>
                         <div class="col-12">
-                          <textarea name="cust_address" id="demo-message" placeholder="Address"></textarea>
+                          <textarea name="address" id="address" placeholder="Address"></textarea>
                         </div>
                         <div class="col-md-12">
                           <button type="submit" id="form-submit" class="button">Sign Up</button>

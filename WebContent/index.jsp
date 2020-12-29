@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>  
 <!DOCTYPE html>
 <html lang="en">
-
   <head>
 
     <meta charset="utf-8">
@@ -33,10 +33,25 @@
                 <a href="index.jsp"><img src="assets/images/logo nurhomestay6.png"></a>
               </div>
               <div class="kemana-kita">
-                <a href="index.jsp" >Home</a>
-                <a href="rumahinfo.jsp">Gallery</a>
-                <a href="about.jsp">About Us</a>
-                <a href="login.jsp">Log In/Sign Up</a>
+                <%
+                	if(session.getAttribute("id") != null) {
+                %>
+                	<a href="index.jsp">Home</a>
+                	<a href="CustomerController?action=viewCustomer&id=<%= session.getAttribute("id")%>">Profile</a>
+                	<a href="reservation.jsp">Reservation</a>
+                	<a href="rumahinfo.jsp">Gallery</a>
+                	<a href="about.jsp">About Us</a>
+                	<a href="CustomerController?action=logout">Log Out</a>
+                <%
+               		 } else {
+                %>
+                	<a href="index.jsp" >Home</a>
+                	<a href="rumahinfo.jsp">Gallery</a>
+                	<a href="about.jsp">About Us</a>
+                	<a href="login.jsp?">Log In/Sign Up</a>
+                <%
+                }
+                %>
               </div>
             </header>
 
@@ -65,34 +80,33 @@
                   </div>
                 </div>
               </div>
+              
+
               <div style="margin-top: 30px">
-                <form id="form-book" action="addreservation.jsp">
                   <div class=" nak-row-gak">
                     Homestay<br>
                     <select class="bolehla" name="homestay">
                       <option value="">Choose Homestay</option>
-                      <option value="Taman Pokok Manga 1">Taman Pokok Manga 1</option>
-                      <option value="Taman Pokok Manga 2">Taman Pokok Manga 2</option>
-                      <option value="Taman Pandan Murni">Taman Pandan Murni</option>
-                      <option value="Taman Pandan Indah">Taman Pandan Indah</option>
+                      <c:forEach items="${homestays}" var="homestay">
+                      <option value="<c:out value="${homestay.home_name}" />"><c:out value="${homestay.home_name}" /></option>
+                      </c:forEach>
                     </select>
                   </div>
                   <div class="nak-row-gak">
                     Day<br>
-                      <input class="bolehla" type="number" name="days" min="1" max="30" placeholder="1">
+                      <input class="bolehla" type="number" name="days" min="1" max="30" placeholder="1" form="main-form"/>
                   </div>
                   <div class=" nak-row-gak">
                     Check-in<br>
-                    <input class="bolehla"  type="date" name="checkindate" placeholder="1" />
+                    <input class="bolehla"  type="date" name="checkindate" placeholder="1" form="main-form"/>
                   </div>
                   <div class=" nak-row-gak">
                     Check-out<br>
-                    <input class="bolehla"  type="date" name="checkindate" placeholder="1" />
+                    <input class="bolehla"  type="date" name="checkindate" placeholder="1" form="main-form" />
                   </div>
                   <div class="nak-row-gak" align="center" style="width:300px; margin: auto">
-                  <button type="submit" name="check">Check Avalibility</button>
+                  <button type="submit" name="check" form="main-form">Check Avalibility</button>
                   </div>
-              </form>
             </div>
             </section>
             
@@ -145,6 +159,8 @@
                 </div>
               </div>
             </section> -->
+            
+            
 
             <!-- Top Image -->
             <section class="top-image">
@@ -181,6 +197,7 @@
                       guests extraordinary experiences, created by combining unique architecture and structure, 
                       expressive decor and artistry, and magnificent features. Add great service, and the 
                       result is an unforgettable guest experience.</p>
+                      
                       <div class="primary-button">
                         <a href="about.jsp">Read More</a>
                       </div>

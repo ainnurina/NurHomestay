@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<!DOCTYPE htsml>
 <html lang="en">
 
   <head>
@@ -23,7 +24,9 @@
   </head>
 
   <body class="is-preload">
-
+  
+  	
+    
     <!-- Wrapper -->
     <div id="wrapper">
 
@@ -37,63 +40,61 @@
                 <a href="index.jsp"><img src="assets/images/logo nurhomestay6.png"></a>
               </div>
               <div class="kemana-kita">
-                <a href="afterindex.jsp">Home</a>
-                <a href="custprofile.jsp">Profile</a>
-                <a href="reservation.jsp">Reservation</a>
-                <a href="afterabout.jsp">About Us</a>
-                <a href="index.jsp">Logout</a>
+               <a href="index.jsp">Home</a>
+               <a href="CustomerController?action=viewCustomer&id=<%= session.getAttribute("id")%>">Profile</a>
+               <a href="reservation.jsp">Reservation</a>
+               <a href="rumahinfo.jsp">Gallery</a>
+               <a href="about.jsp">About Us</a>
+               <a href="CustomerController?action=logout">Log Out</a>
               </div>
             </header>
 
+			
+			<input type="hidden" name="id" value="<%= session.getAttribute("id")%>"/>
             <section class="main banner">
             <div class="container-fluid">
               <div class="row">
+              
                 <div class="column">
                     <div class="card">
-                        <!--nak buh gambaq ka??
-                        <img src="img.jpg" alt="John" style="width:100%"> 
-                        -->
-                        <h1>FishEye</h1>
+                        <h1><c:out value="${cust.username}"/></h1>
                         <!-- <p class="title">CEO & Founder, Example  TUKAQQQQQQQ</p>
                         <p>Harvard University  TUKAQQQQQQQ</p> -->
-                        <p><a href="custupdateprofile.jsp"><button>Update</button></a></p>
+                        <p><a href="CustomerController?action=updateCustomer&id=<%= session.getAttribute("id")%>"><button>Update</button></a></p>
                       </div>
                 </div>
                 <div class="column-1">
-                    <h2>Profile user</h2><br/><br/>
+                    <h2>Profile User</h2><br/><br/>
                     <table>
-                        <!-- <tr> hide these info
-                            <td class="labelsize"><label>Customer ID</label></td>
-                            <td class="double-dot">:</td>
-                            <td>110</td>
-                        </tr> -->
                         <tr>
                             <td class="labelsize"><label>Username</label></td>
                             <td class="double-dot">:</td>
-                            <td>FishEye</td>
+                            <td><c:out value="${cust.username}" /></td>
                         </tr>
                         <tr>
                             <td class="labelsize"><label>Name</label></td>
                             <td class="double-dot">:</td>
-                            <td>Saiful Irfan</td>
+                            <td><c:out value="${cust.cust_name}"/></td>
                         </tr>
                         <tr>
                             <td class="labelsize"><label>Phone No</label></td>
                             <td class="double-dot">:</td>
-                            <td>01689700988</td>
+                            <td><c:out value="${cust.cust_phoneNo}"/></td>
                         </tr>
                         <tr>
                             <td class="labelsize"><label>Address</label></td>
                             <td class="double-dot">:</td>
-                            <td>Chikus, Perak.</td>
+                            <td><c:out value="${cust.address}" /></td>
                         </tr>
                         <tr>
                             <td class="labelsize"><label>Email</label></td>
                             <td class="double-dot">:</td>
-                            <td>rockstar@gmail.com</td> 
+                            <td><c:out value="${cust.cust_email}" /></td> 
+                            
                         </tr>
                     </table>
                 </div>
+                
               </div>
             </div>
             </section>

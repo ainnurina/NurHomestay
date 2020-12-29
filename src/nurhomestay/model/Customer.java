@@ -14,9 +14,8 @@ public class Customer {
 		super();
 	}
 	
-	public Customer(int custId, String username, String cust_name, String cust_phoneNo, String cust_email, String address, String password) {
+	public Customer(String username, String cust_name, String cust_phoneNo, String cust_email, String address, String password) {
 		super();
-		this.custId = custId;
 		this.username = username;
 		this.cust_name = cust_name;
 		this.cust_phoneNo = cust_phoneNo;

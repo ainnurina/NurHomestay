@@ -4,6 +4,7 @@ package nurhomestay.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 import nurhomestay.connection.ConnectionManager;
@@ -19,9 +20,9 @@ public class CustomerDAO {
 	static String username, cust_name, cust_phoneNo, cust_email, address, password;
 	
 	public Customer getCustomer(Customer customer) {
-		custId = customer.getCustId();
+		username = customer.getUsername();
 
-        String searchQuery = "select * from customer where custid='" + custId + "'";
+        String searchQuery = "select * from customer where username='" + username + "'";
 
         try {
             currentCon = ConnectionManager.getConnection();
@@ -77,7 +78,6 @@ public class CustomerDAO {
 	}
 	
 	public void add(Customer customer) {
-		custId = customer.getCustId();
         username = customer.getUsername();
         cust_name = customer.getCust_name();
         cust_phoneNo = customer.getCust_phoneNo();
@@ -87,17 +87,17 @@ public class CustomerDAO {
        
     	try {
     		currentCon = ConnectionManager.getConnection();
-    		ps=currentCon.prepareStatement("insert into customer (custid, username, cust_name, cust_phoneno, cust_address, cust_email, cust_password)values(?,?,?,?,?,?,?)");
-    		ps.setInt(1, custId);
-    		ps.setString(2,username);
-    		ps.setString(3,cust_name);
-    		ps.setString(4,cust_phoneNo);
+    		ps=currentCon.prepareStatement("insert into customer ( username, cust_name, cust_phoneno, cust_address, cust_email, cust_password)values(?,?,?,?,?,?)");
+    		
+    		ps.setString(1,username);
+    		ps.setString(2,cust_name);
+    		ps.setString(3,cust_phoneNo);
+    		ps.setString(4, address);
     		ps.setString(5,cust_email);
-    		ps.setString(6, address);
-    		ps.setString(7,password);
+    		ps.setString(6,password);
     		ps.executeUpdate();
     	
-    		System.out.println("Cust ID is " + custId);	
+    		
 			System.out.println("Username is " + username);
     		System.out.println("Customer name is " + cust_name);
     		System.out.println("Customer Phone Number is " + cust_phoneNo);
@@ -128,8 +128,102 @@ public class CustomerDAO {
     			currentCon = null;
     		}
     	}
-		
-		
 	}
+	
+	public boolean checkUser(String username,String password) 
+    {
+        boolean st =false;
+        try {
 
+            //creating connection with the database
+            currentCon = ConnectionManager.getConnection();
+            PreparedStatement ps = currentCon.prepareStatement("select * from customer where username=? and cust_password=?");
+            ps.setString(1, username);
+            ps.setString(2, password);
+            ResultSet rs =ps.executeQuery();
+            st = rs.next();
+
+        }
+        catch(Exception e) {
+        	System.out.println("failed: An Exception has occurred! " + e);
+        }
+        return st;                 
+    }  
+	
+	public int getCustomerId (String uname) {
+		int id = 0;
+
+		try {
+			currentCon = ConnectionManager.getConnection();
+			ps=currentCon.prepareStatement("select * from customer where username=?");
+
+			ps.setString(1, uname);
+			ResultSet rs = ps.executeQuery();
+
+			if (rs.next()) {
+		        id = rs.getInt("custid");
+			}
+		} catch (SQLException e) {
+			System.out.println("failed: An Exception has occurred! " + e);
+		}
+		return id;
+	}
+	
+	public Customer getCustomerById(String id) {
+
+		Customer cust = new Customer();
+
+		try {
+			currentCon = ConnectionManager.getConnection();
+			ps=currentCon.prepareStatement("select * from customer where custid=?");
+
+			ps.setString(1, id);
+			ResultSet rs = ps.executeQuery();
+
+			if (rs.next()) {
+		        cust.setCustId(rs.getInt("custid"));
+	            cust.setUsername(rs.getString("username"));		          
+	            cust.setCust_name(rs.getString("cust_name"));
+	            cust.setCust_phoneNo(rs.getString("cust_phoneno"));
+	            cust.setAddress(rs.getString("cust_address"));
+	            cust.setCust_email(rs.getString("cust_email"));
+	            cust.setPassword(rs.getString("cust_password"));
+	            
+	            
+			}
+		} catch (SQLException e) {
+			System.out.println("failed: An Exception has occurred! " + e);
+		}
+		return cust;
+	}
+	
+	public void updateCustomer(Customer cust, String cid) {
+        
+		custId = Integer.parseInt(cid); //send cust id from controller to dao
+		System.out.println("haha"+custId);
+        username = cust.getUsername();
+        cust_name = cust.getCust_name();
+        cust_phoneNo = cust.getCust_phoneNo();
+        cust_email = cust.getCust_email();
+        address = cust.getAddress();
+        password = cust.getPassword();
+
+		String searchQuery = "UPDATE customer SET username='" + username  + "' , cust_name='" 
+				+ cust_name + "', cust_phoneno='" + cust_phoneNo  + "' , cust_address='" 
+				+ address + "', cust_email='" + cust_email + "' , cust_password='" 
+				+ password + "'  WHERE custid= '" + custId + "'";
+
+		try {
+
+			currentCon = ConnectionManager.getConnection();
+			stmt = currentCon.createStatement();
+			stmt.executeUpdate(searchQuery);
+
+		} catch (SQLException e) {
+			System.out.println("failed: An Exception has occurred! " + e);
+		}
+
+	}
+	
+	
 }

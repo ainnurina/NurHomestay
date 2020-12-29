@@ -37,10 +37,10 @@
                 <a href="index.jsp"><img src="assets/images/logo nurhomestay6.png"></a>
               </div>
               <div class="kemana-kita">
-                <a href="index.jsp">Home</a>
+                <a href="index.jsp" >Home</a>
                 <a href="rumahinfo.jsp">Gallery</a>
                 <a href="about.jsp">About Us</a>
-                <a href="login.jsp">Log In/Sign Up</a>
+                <a href="login.jsp?">Log In/Sign Up</a>
               </div>
             </header>
 
@@ -50,21 +50,20 @@
               <p>Please fill in your credentials to login.</p>
               </div>
               <div align="center" style="margin-bottom: 12px; border:1px">
-                <form action="" method="post">
+                <form action="CustomerController?action=login" name="login" method="post">
+                
                   <div class="col-md-6">
                       <label>Username</label>
-                      <input type="text" name="username" class="form-control" required>
+                      <input type="text" name="username" id="username" class="form-control" required>
                       <span class="help-block"></span>
                   </div>
                   <div class="col-md-6">
                       <label>Password </label>
-                      <input type="password" name="password" class="form-control" required>
+                      <input type="password" name="password" id="password" class="form-control" required>
                   </div>
                   <div class="col-md-6">
-                    <div class="border-radius-button">
-                      <a href="custprofile.jsp">Log In</a>
-                    </div>
-                  </div>
+                          <button type="submit" id="form-submit" class="button">Login</button>
+                        </div>
                 </form>
               </div> 
               <div align="center">

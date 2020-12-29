@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>   
 <!DOCTYPE html>
 <html lang="en">
 
@@ -37,14 +38,16 @@
                 <a href="index.jsp"><img src="assets/images/logo nurhomestay6.png"></a>
               </div>
               <div class="kemana-kita">
-                <a href="afterindex.jsp">Home</a>
-                <a href="custprofile.jsp">Profile</a>
+                <a href="index.jsp">Home</a>
+                <a href="CustomerController?action=viewCustomer&id=<%= session.getAttribute("id")%>">Profile</a>
                 <a href="reservation.jsp">Reservation</a>
-                <a href="afteraboutjsp">About Us</a>
-                <a href="index.jsp">Logout</a>
+                <a href="rumahinfo.jsp">Gallery</a>
+                <a href="about.jsp">About Us</a>
+                <a href="CustomerController?action=logout">Log Out</a>
               </div>
             </header>
-  
+            
+            
               <section class="main-banner">
               <div class="container-fluid">
               <div class="row">
@@ -53,50 +56,44 @@
                       <!--nak buh gambaq ka??
                       <img src="img.jpg" alt="John" style="width:100%"> 
                       -->
-                      <h1>FishEye</h1>
-                      <!-- <p class="title">CEO &#38; Founder, Example  TUKAQQQQQQQ</p>
-                      <p>Harvard University  TUKAQQQQQQQ</p> -->
-                      <p><a href="custprofile.jsp"><button>View</button></a></p>
+                      <h1><c:out value="${cust.username}"/></h1>
+                      <p><a href="CustomerController?action=viewCustomer&id=<%= session.getAttribute("id")%>"><button>View</button></a></p>
                     </div>
                   </div>
                   <div class="column-1">
-                      <h2>Profile user</h2><br/><br/>
-                      <form>
+                      <h2>Update Profile User</h2><br/><br/>
+                      <form name="updatecustomer" method="post" action="CustomerController?action=updateCustomer">
+                      <input type="hidden" name="id" value="<%= session.getAttribute("id")%>"/>
                       <table>
-                          <!-- <tr>
-                              <td class="labelsize"><label>Customer ID</label></td>
-                              <td class="double-dot">:</td>
-                              <td>TUKAQQQQQQQ</td>
-                          </tr> -->
                           <tr>
                               <td class="labelsize"><label>Username</label></td>
                               <td class="double-dot">:</td>
-                              <td><input name="username" type="text" class="form-control" id="name" placeholder="FishEye" required></td>
+                              <td><input name="username" type="text" class="form-control"  placeholder="Username" value="<c:out value="${cust.username}" />" required/></td>
                           </tr>
                           <tr>
                               <td class="labelsize"><label>Name</label></td>
                               <td class="double-dot">:</td>
-                              <td><input name="cust_name" type="text" class="form-control" id="name" placeholder="Name" required></td>
+                              <td><input name="cust_name" type="text" class="form-control" placeholder="Name" value="<c:out value="${cust.cust_name}" />" required></td>
                           </tr>
                           <tr>
                               <td class="labelsize"><label>Phone No</label></td>
                               <td class="double-dot">:</td>
-                              <td><input name="cust_email" type="text" class="form-control" id="email" placeholder="Email" required></td>
+                              <td><input name="cust_phoneNo" type="text" class="form-control" placeholder="Email" value="<c:out value="${cust.cust_phoneNo}" />" required></td>
                           </tr>
                           <tr>
                               <td class="labelsize"><label>Address</label></td>
                               <td class="double-dot">:</td>
-                              <td><textarea name="cust_address" id="demo-message" placeholder="Address" rows="6"></textarea></td>
+                              <td><textarea name="address"  placeholder="Address" rows="6"><c:out value="${cust.address}" /></textarea></td>
                           </tr>
                           <tr>
                               <td class="labelsize"><label>Email</label></td>
                               <td class="double-dot">:</td>
-                              <td><input name="cust_email" type="text" class="form-control" id="email" placeholder="Email" required></td>
+                              <td><input name="cust_email" type="text" class="form-control"  placeholder="Email" value="<c:out value="${cust.cust_email}" />" required></td>
                           </tr>
                           <tr>
                             <td class="labelsize"><label>Current Password</label></td>
                             <td class="double-dot">:</td>
-                            <td><input name="password" type="password" class="form-control" id="name" placeholder="Password" required></td>
+                            <td><input name="password" type="password" class="form-control" id="name" placeholder="Password" value="<c:out value="${cust.password}" />" required></td>
                         </tr>
                         <tr>
                             <td class="labelsize"><label>New Password</label></td>
