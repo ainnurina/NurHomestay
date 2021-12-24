@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,7 +10,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
 
     <title>Create Staff Profile</title>
 
@@ -23,21 +25,72 @@
   </head>
 
 <body class="is-preload">
-    <div id="mySidenav" class="sidenav">
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-        <a href="adminliststaff.jsp">Staff</a>
-        <a href="adminlistbranch.jsp">Branch</a>
-        <a href="adminsalereport.jsp">Sales Report</a>
-      </div>
 
+	<!-- Side nav -->
+	<%
+       if(session.getAttribute("staffid") != null) {
+    %>
+	<div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <%
+        	if(session.getAttribute("managerid") != null) {
+        %>
+        <a href="StaffController?action=staffprofile&staffid=<%= session.getAttribute("staffid")%>">PROFILE</a>
+        <button class="dropdown-btn">RESERVATION 
+    	<i class="fa fa-caret-down"></i>
+  		</button>
+  		<div class="dropdown-container">
+		    <a href="ReservationController?action=viewStatusPayment">REFUND</a>
+  		</div>
+  		<button class="dropdown-btn">BRANCH 
+    	<i class="fa fa-caret-down"></i>
+  		</button>
+  		<div class="dropdown-container">
+		    <a href="adminaddbranch.jsp">ADD BRANCH</a>
+		    <a href="HomestayController?action=listHomestay">LIST BRANCH</a>
+  		</div>
+  		<button class="dropdown-btn">STAFF 
+    	<i class="fa fa-caret-down"></i>
+  		</button>
+  		<div class="dropdown-container">
+		    <a href="admincreatestaff.jsp">ADD STAFF</a>
+		    <a href="StaffController?action=listStaff">LIST STAFF</a>
+  		</div>
+        <!-- <a href="adminsalereport.jsp">SALES REPORT</a> -->
+  		<%
+            } else {
+        %>
+  		<a href="StaffController?action=staffprofile&staffid=<%= session.getAttribute("staffid")%>">PROFILE</a>
+        <button class="dropdown-btn">RESERVATION 
+    	<i class="fa fa-caret-down"></i>
+  		</button>
+  		<div class="dropdown-container">
+		    <a href="ReservationController?action=staffViewReservation">SCHEDULE</a>
+		    <a href="ReservationController?action=viewStatusPayment">REFUND</a>
+  		</div>
+  		<button class="dropdown-btn">BRANCH 
+    	<i class="fa fa-caret-down"></i>
+  		</button>
+  		<div class="dropdown-container">
+		    <a href="adminaddbranch.jsp">ADD BRANCH</a>
+		    <a href="HomestayController?action=listHomestay">LIST BRANCH</a>
+  		</div>
+         <%
+           }
+         %>
+      </div>
+      <%
+         }
+      %>
+      
       <!-- Header -->
       <header id="header" style="margin-top: 0px;">
-        <span style="font-size:36px;cursor:pointer; margin-left: 20px;margin-top: 25px;" onclick="openNav()">&#9776;</span>
+        <span style="font-size:36px;cursor:pointer; margin-left: 20px;margin-top: 30px;" onclick="openNav()">&#9776;</span>
         <div class="logo">
-          <img src="assets/images/logo nurhomestay6.png">
+          <img src="assets/images/logo nurhomestay6.png" width="280">
         </div>
         <div class="kemana-kita">
-          <a href="index.jsp">Log Out</a>
+          <a href="StaffController?action=logout">Log Out</a>
         </div>
       </header>
 
@@ -46,32 +99,60 @@
         <div class="container-fluid">
       <div class="row">
         <div class="column">
+        	<!-- 
             <div class="card">
-                <!-- nak buh gambaq ka??
-                <img src="img.jpg" alt="John" style="width:100%"> --> 
-               
-                <h1>TUKAQQQQQ</h1>
-                <!-- <p class="title">CEO & Founder, Example  TUKAQQQQQQQ</p>
-                <p>Harvard University  TUKAQQQQQQQ</p> -->
-                <p><a href="adminliststaff.jsp"><button>Back</button></a></p>
-              </div>
+                
+              </div> -->
         </div>
         <div class="column-1">
+        <form id="createstaff" name="createStaff" action="StaffController?action=createStaff" method="post">
             <h2>Create Staff Profile</h2><br/><br/>
             <table>
                 <tr>
-                    <td class="labelsize"><label>Staff ID</label></td>
+                    <td class="labelsize"><label>Username</label></td>
                     <td class="double-dot">:</td>
-                    <td><input name="staff_name" type="text" class="form-control" id="name" placeholder="ID" required></td>
+                    <td><input name="username" type="text" class="form-control" id="username" placeholder="username" required></td>
+                </tr>
+                <tr>
+                    <td class="labelsize"><label>Staff Name</label></td>
+                    <td class="double-dot">:</td>
+                    <td><input name="sta_name" type="text" class="form-control" id="sta_name" placeholder="Name" required></td>
+                </tr>
+                <tr>
+                    <td class="labelsize"><label>Staff Phone </label></td>
+                    <td class="double-dot">:</td>
+                    <td><input name="sta_phoneNo" type="number" class="form-control" id="sta_phoneNo" placeholder="Phone No" required></td>
+                </tr>
+                <tr>
+                    <td class="labelsize"><label>Staff Email</label></td>
+                    <td class="double-dot">:</td>
+                    <td><input name="sta_email" type="email" class="form-control" id="sta_email" placeholder="Email" required></td>
+                </tr>
+                <tr>
+                    <td class="labelsize"><label>Staff Address</label></td>
+                    <td class="double-dot">:</td>
+                    <td><textarea name="sta_address" id="sta_address" placeholder="Address" class="form-control" required></textarea></td>
                 </tr>
                 <tr>
                     <td class="labelsize"><label>Staff Password</label></td>
                     <td class="double-dot">:</td>
-                    <td><input name="staff_phone" type="text" class="form-control" id="phoneno" placeholder="Password" required></td>
+                    <td><input name="sta_password" type="password" class="form-control" id="sta_password" placeholder="Password" required></td>
+                </tr>
+                <tr>
+                    <td class="labelsize"><label>Position</label></td>
+                    <td class="double-dot">:</td>
+                    <td>
+                    	<select name="role">
+                    		<option value="Staff">Staff</option>
+					 		<option value="Manager">Manager</option>
+                    	</select>
+                    </td>
                 </tr>
             </table>
+            <input type="hidden" name="managerId" value="<%= session.getAttribute("staffid")%>"/>
             <br><br>
-            <center><a href="adminliststaff.jsp"><button>Create</button></a></center>
+            <center><button type="submit" value="Submit">Submit</button></center>
+            </form>
 			</div>
         </div>
       </div></section>
@@ -90,6 +171,22 @@
       
       function closeNav() {
         document.getElementById("mySidenav").style.width = "0";
+      }
+      
+      /* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
+      var dropdown = document.getElementsByClassName("dropdown-btn");
+      var i;
+
+      for (i = 0; i < dropdown.length; i++) {
+        dropdown[i].addEventListener("click", function() {
+        this.classList.toggle("active");
+        var dropdownContent = this.nextElementSibling;
+        if (dropdownContent.style.display === "block") {
+        dropdownContent.style.display = "none";
+        } else {
+        dropdownContent.style.display = "block";
+        }
+        });
       }
       </script>
   </body>

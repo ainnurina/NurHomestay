@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,7 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
 
     <title>Login</title>
 
@@ -23,7 +24,13 @@
   </head>
 
 <body class="is-preload">
-
+  <c:choose>
+	<c:when test="${fail == 'failure'}" >
+	  <script>
+          alert("Username or Password incorrect");
+      </script>
+	</c:when>
+</c:choose>
     <!-- Wrapper -->
     <div id="wrapper">
 
@@ -34,22 +41,23 @@
             <!-- Header -->
             <header id="header">
               <div class="logo">
-                <a href="index.jsp"><img src="assets/images/logo nurhomestay6.png"></a>
+                <a href="index.jsp"><img src="assets/images/logo nurhomestay6.png" width="280"></a>
               </div>
               <div class="kemana-kita">
-                <a href="index.jsp" >Home</a>
+                <a href="HomestayController?action=listallhomestay" >Home</a>
                 <a href="rumahinfo.jsp">Gallery</a>
                 <a href="about.jsp">About Us</a>
                 <a href="login.jsp?">Log In/Sign Up</a>
               </div>
             </header>
-
             <section class="forms">
+            
               <div align="center">
               <h2>Login</h2>
               <p>Please fill in your credentials to login.</p>
               </div>
               <div align="center" style="margin-bottom: 12px; border:1px">
+              
                 <form action="CustomerController?action=login" name="login" method="post">
                 
                   <div class="col-md-6">
@@ -61,14 +69,16 @@
                       <label>Password </label>
                       <input type="password" name="password" id="password" class="form-control" required>
                   </div>
+                  <input type="hidden" name="checkindate" value="<c:out value="${checkindate}" />">
+                  <input type="hidden" name="checkoutdate" value="<c:out value="${checkoutdate}" />">
                   <div class="col-md-6">
                           <button type="submit" id="form-submit" class="button">Login</button>
                         </div>
                 </form>
               </div> 
               <div align="center">
-                <div><a href="forget.jsp">Forget password</a></div>
-                <div><a href="signup.jsp">Sign up now</a></div>
+                <a href="signup.jsp">Sign up now</a><br>
+                <a href="stafflogin.jsp">Staff?</a>
               </div>
             </section>
           </div>

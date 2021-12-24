@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+      	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+      	<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>    
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,8 +11,8 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300&display=swap" rel="stylesheet">
-
+	<link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+	
     <title>Reservation</title>
 
     <!-- Bootstrap core CSS -->
@@ -19,10 +21,36 @@
     <!-- Additional CSS Files -->
     <link rel="stylesheet" href="assets/css/fontawesome.css">
     <link rel="stylesheet" href="assets/css/templatemo-style.css">
+    
+    <script type="text/javascript">
+    function answer() {
+    	var resid = document.forms["cancelbooking"]["resid"].value;
+    	var action = document.forms["cancelbooking"]["action"].value;
+    	var id = document.forms["cancelbooking"]["id"].value;
+    	var day = document.forms["cancelbooking"]["day"].value;
+    	var r = confirm("Are you sure to cancel booking?\n\nTake not, once cancelling:-\n1. Before two week of check-in, payment exclude deposit will be refund only. \n2. Within two weeks before check-in, payment will be burn.\n\nWe will process your refund within two weeks after cancel the booking.");
+    
+    	if (r == true) {
+    		location.replace('ReservationController?action=' + action + '&id=' + id + '&resid=' + resid + '&day' + day);
+    	}
+    	else {
+    		return false;
+    	}
+    }
+    
+    </script>
 
   </head>
 
   <body class="is-preload">
+  <c:choose>
+	<c:when test="${done == 'doneupdate'}" >
+	  <script>
+          alert("Succesful Update");
+      </script>
+	</c:when>
+</c:choose>
+
     <!-- Wrapper -->
     <div id="wrapper">
 
@@ -33,23 +61,38 @@
             <!-- Header -->
             <header id="header">
               <div class="logo">
-                <a href="index.jsp"><img src="assets/images/logo nurhomestay6.png"></a>
+                <a href="index.jsp"><img src="assets/images/logo nurhomestay6.png" width="280"></a>
               </div>
               <div class="kemana-kita">
-                <a href="afterindex.jsp">Home</a>
-                <a href="custprofile.jsp">Profile</a>
-                <a href="reservation.jsp">Reservation</a>
-                <a href="afterabout.jsp">About Us</a>
-                <a href="index.jsp">Logout</a>
+                <%
+                	if(session.getAttribute("id") != null) {
+                %>
+                	<a href="index.jsp">Home</a>
+                	<a href="CustomerController?action=viewCustomer&id=<%= session.getAttribute("id")%>">Profile</a>
+                	<a href="ReservationController?action=listreservation&id=<%= session.getAttribute("id")%>">Reservation</a>
+                	<a href="rumahinfo.jsp">Gallery</a>
+                	<a href="about.jsp">About Us</a>
+                	<a href="CustomerController?action=logout">Log Out</a>
+                <%
+               		 } else {
+                %>
+                	<a href="HomestayController?action=listallhomestay" >Home</a>
+                	<a href="rumahinfo.jsp">Gallery</a>
+                	<a href="about.jsp">About Us</a>
+                	<a href="login.jsp?">Log In/Sign Up</a>
+                <%
+                }
+                %>
               </div>
             </header>
 
+       
             <!-- list reservation -->
+            <input type="hidden" name="id" value="<%= session.getAttribute("id")%>"/>
             <section class="tables">
                 <div class="container-fluid">
                   <div class="row">
                     <div class="col-md-12">
-                        <a href="index.jsp"><img class="useme" src="assets/images/plus.png" alt="add reservation"></a>
                       <div class="section-heading">
                         <h2>Reservation</h2>
                       </div>
@@ -61,24 +104,61 @@
                               <th>Check-in</th>
                               <th>Check-out</th>
                               <th>Homestay</th>
-                              <th></th>
+                        
+                              <th style="width:10%;">Update</th>
+                              <th style="width:20%;">Cancel</th>
                             </tr>
                           </thead>
-                          <tbody>
+                          <thead>
                             <tr>
-                              <td>#1011</td> <!-- link view reservation -->
-                              <td>25 December 2020</td>
-                              <td>30 December 2020</td>
-                              <td>Taman Mawar Murni</td>
-                              <td><a href="custafterreservation.jsp"><img class="useme" src="assets/images/edit-1.png"></a></td>
+                              <th></th>
+                              <th></th>
+                              <th></th>
+                              <th></th>
+                              <td style="color:red;">Only applicable two weeks before check-in date</td>
+                              <td style="color:red;">Only applicable before check-in date</td>
                             </tr>
+                          </thead>
+                          <c:forEach items="${reserves}" var="res">
                             <tr>
-                              <td>#1012</td>
-                              <td>14 December 2020</td>
-                              <td>15 December 2020</td>
-                              <td>Taman Mawar Murni</td>
-                              <td><a href="#"><img class="useme" src="assets/images/edit-1.png"></a></td>
+                              <td><a href="ReservationController?action=viewReservation&id=<%= session.getAttribute("id")%>&resid=<c:out value="${res.reserveid}" />"><c:out value="${res.reserveid}" /></a></td>
+                              <td><c:out value="${res.checkindate}" /></td>
+                              <td><c:out value="${res.checkoutdate}" /></td>
+                               <!-- NEW -->
+                              <td><c:out value="${res.home_name}" /></td>
+                              
+                              <!-- calculate day -->
+                              <c:set var="difference" value="${res.checkindate.getTime() - datenow.getTime()}" />
+                              <c:set var="dayBetween" value="${difference/(1000*60*60*24)}" />
+                              <fmt:parseNumber var = "day" integerOnly = "true" type = "number" value = "${dayBetween}" />
+                              
+                            <c:choose>
+                      		<c:when test="${day > 14}">
+                              	<td><a href="ReservationController?action=updateReservation2&id=<%= session.getAttribute("id")%>&resid=<c:out value="${res.reserveid}" />"><button>Update</button></a></td>
+							</c:when>
+							<c:otherwise>
+                              <td></td>
+                            </c:otherwise>
+                            </c:choose>
+							  
+                            <c:choose>
+                      		<c:when test="${day > 0}">
+                      		<td>
+                      			<form name="cancelbooking" onsubmit="answer()">
+                      				<input type="hidden" name="resid" value="<c:out value="${res.reserveid}" />">
+                      				<input type="hidden" name="action" value="deleteReservation">
+                      				<input type="hidden" name="id" value="<%=session.getAttribute("id")%>">
+                      				<input type="hidden" name="day" value="${day}">
+                              		<button type="submit" class="button">Cancel Booking</button>
+                              	</form>
+                             </td>
+                            </c:when>
+                        	<c:otherwise>
+                              <td></td>
+                            </c:otherwise>
+                            </c:choose>
                             </tr>
+                           </c:forEach>
                           </tbody>
                         </table>
                         <!-- boleh pakai klau nak
@@ -100,6 +180,7 @@
           </div>
         </div>
     </div>
+    
 
     <div class="footer">
         Instagram<br><br>

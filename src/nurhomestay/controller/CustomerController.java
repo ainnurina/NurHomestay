@@ -13,8 +13,6 @@ import javax.servlet.http.HttpSession;
 import nurhomestay.dao.CustomerDAO;
 import nurhomestay.model.Customer;
 
-
-
 /**
  * Servlet implementation class CustomerController
  */
@@ -22,7 +20,7 @@ import nurhomestay.model.Customer;
 public class CustomerController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private CustomerDAO daoCustomer;
-	String forward="";	
+	String forward="";
 	
     /**
      * @see HttpServlet#HttpServlet()
@@ -49,6 +47,17 @@ public class CustomerController extends HttpServlet {
         	forward = "custprofile.jsp";
 			
 		}
+		else if (action.equalsIgnoreCase("staffviewCustomer")) {
+			String cid= ""+request.getParameter("id");
+        	
+			
+			System.out.println("detecting customer"+cid);
+        	Customer cust = new Customer();
+        	cust = daoCustomer.getCustomerById(cid);       
+        	request.setAttribute("cust", cust);
+        	forward = "staffviewcustprofile.jsp";
+			
+		}
 		else if (action.equalsIgnoreCase("updatecustomer")) {
 			String cid= ""+request.getParameter("id");
         	
@@ -58,6 +67,17 @@ public class CustomerController extends HttpServlet {
         	cust = daoCustomer.getCustomerById(cid);  	
         	
         	forward = "custupdateprofile.jsp";
+            request.setAttribute("cust", cust); 
+        }
+		else if (action.equalsIgnoreCase("updatePassword")) {
+			String cid= ""+request.getParameter("id");
+        	
+			System.out.println("detecting customer"+cid);
+        	
+        	Customer cust = new Customer();
+        	cust = daoCustomer.getCustomerById(cid);  	
+        	
+        	forward = "custupdatepassword.jsp";
             request.setAttribute("cust", cust); 
         }
 		else if (action.equalsIgnoreCase("logout")) {
@@ -77,7 +97,7 @@ public class CustomerController extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		String action = request.getParameter("action");
 
 		
 		if (action.equalsIgnoreCase("signup")) {
@@ -107,7 +127,7 @@ public class CustomerController extends HttpServlet {
 			
 			if(daoCustomer.checkUser(username, password))
 	        {	
-	        	int id = daoCustomer.getCustomerId(username);
+	        	int id = daoCustomer.getCustomerId(username, password);
 	        	HttpSession session = request.getSession();
 	        	
 				session.setAttribute("id", id);
@@ -118,7 +138,16 @@ public class CustomerController extends HttpServlet {
 	        	cust = daoCustomer.getCustomerById(cid);
 	        	request.setAttribute("cust", cust);
 	        	System.out.println(cust.getCust_email());
-	        	forward = "index.jsp";
+	        	
+	        	if(request.getParameter("checkindate").length() != 0 || request.getParameter("checkoutdate").length() != 0) {
+	        		System.out.println("check in date:"+ request.getParameter("checkindate"));
+	        		request.setAttribute("checkindate", request.getParameter("checkindate"));
+	        		request.setAttribute("checkoutdate", request.getParameter("checkoutdate"));
+	        		forward="HomestayController?action=checkAvailable";
+	        	}
+	        	else {
+	        		forward = "index.jsp";
+	        	}
 	        	
 	        	RequestDispatcher view = request.getRequestDispatcher(forward);
 	            view.forward(request, response);
@@ -126,8 +155,9 @@ public class CustomerController extends HttpServlet {
 	        }
 	        else
 	        {
+	           request.setAttribute("fail", "failure");
 	           System.out.println("Username or Password incorrect");
-	           RequestDispatcher rs = request.getRequestDispatcher("index.jsp");
+	           RequestDispatcher rs = request.getRequestDispatcher("login.jsp");
 	           rs.include(request, response);
 	        }
 		}
@@ -139,15 +169,25 @@ public class CustomerController extends HttpServlet {
 			String cust_phoneNo = request.getParameter("cust_phoneNo");
 			String cust_email = request.getParameter("cust_email");
 			String address = request.getParameter("address");
-			String password = request.getParameter("password");
+							
 			
-			Customer customer = new Customer(username, cust_name, cust_phoneNo, cust_email, address, password);				
+			daoCustomer.updateCustomer(username, cust_name, cust_phoneNo, cust_email, address, custid);							
 			
-			customer = daoCustomer.getCustomer(customer);
+			System.out.println("update customer");
+			request.setAttribute("cust", daoCustomer.getCustomerById(custid));
+			forward = "custprofile.jsp";	
+			RequestDispatcher view = request.getRequestDispatcher(forward);
+			view.forward(request, response);
+		}
+		else if (action.equalsIgnoreCase("updateCustomerPassword")) {
 			
-			daoCustomer.updateCustomer(customer, custid);							
+			String custid = request.getParameter("id");
+			String password = request.getParameter("new_password");
+							
 			
-			System.out.println("inserting customer");
+			daoCustomer.updateCustomerPassword(password, custid);							
+			
+			System.out.println("update customer");
 			request.setAttribute("cust", daoCustomer.getCustomerById(custid));
 			forward = "custprofile.jsp";	
 			RequestDispatcher view = request.getRequestDispatcher(forward);

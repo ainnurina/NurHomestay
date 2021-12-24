@@ -150,14 +150,15 @@ public class CustomerDAO {
         return st;                 
     }  
 	
-	public int getCustomerId (String uname) {
+	public int getCustomerId (String uname, String password) {
 		int id = 0;
 
 		try {
 			currentCon = ConnectionManager.getConnection();
-			ps=currentCon.prepareStatement("select * from customer where username=?");
+			ps=currentCon.prepareStatement("select * from customer where username=? and cust_password=?");
 
 			ps.setString(1, uname);
+			ps.setString(2, password);
 			ResultSet rs = ps.executeQuery();
 
 			if (rs.next()) {
@@ -197,21 +198,14 @@ public class CustomerDAO {
 		return cust;
 	}
 	
-	public void updateCustomer(Customer cust, String cid) {
+	public void updateCustomer(String username, String cust_name, String cust_phoneNo, String cust_email, String address, String cid) {
         
 		custId = Integer.parseInt(cid); //send cust id from controller to dao
 		System.out.println("haha"+custId);
-        username = cust.getUsername();
-        cust_name = cust.getCust_name();
-        cust_phoneNo = cust.getCust_phoneNo();
-        cust_email = cust.getCust_email();
-        address = cust.getAddress();
-        password = cust.getPassword();
 
 		String searchQuery = "UPDATE customer SET username='" + username  + "' , cust_name='" 
 				+ cust_name + "', cust_phoneno='" + cust_phoneNo  + "' , cust_address='" 
-				+ address + "', cust_email='" + cust_email + "' , cust_password='" 
-				+ password + "'  WHERE custid= '" + custId + "'";
+				+ address + "', cust_email='" + cust_email + "'  WHERE custid= '" + custId + "'";
 
 		try {
 
@@ -224,6 +218,24 @@ public class CustomerDAO {
 		}
 
 	}
+	
+	public void updateCustomerPassword(String password, String cid) {
+	        
+			custId = Integer.parseInt(cid); 
+	
+			String searchQuery = "UPDATE customer SET cust_password='" + password  + "'  WHERE custid= '" + custId + "'";
+	
+			try {
+	
+				currentCon = ConnectionManager.getConnection();
+				stmt = currentCon.createStatement();
+				stmt.executeUpdate(searchQuery);
+	
+			} catch (SQLException e) {
+				System.out.println("failed: An Exception has occurred! " + e);
+			}
+	
+		}
 	
 	
 }

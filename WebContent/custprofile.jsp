@@ -10,7 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
 
     <title>Profile</title>
 
@@ -37,30 +37,44 @@
             <!-- Header -->
             <header id="header">
               <div class="logo">
-                <a href="index.jsp"><img src="assets/images/logo nurhomestay6.png"></a>
+                <a href="index.jsp"><img src="assets/images/logo nurhomestay6.png" width="280"></a>
               </div>
               <div class="kemana-kita">
-               <a href="index.jsp">Home</a>
-               <a href="CustomerController?action=viewCustomer&id=<%= session.getAttribute("id")%>">Profile</a>
-               <a href="reservation.jsp">Reservation</a>
-               <a href="rumahinfo.jsp">Gallery</a>
-               <a href="about.jsp">About Us</a>
-               <a href="CustomerController?action=logout">Log Out</a>
+               <%
+                	if(session.getAttribute("id") != null) {
+                %>
+                	<a href="index.jsp">Home</a>
+                	<a href="CustomerController?action=viewCustomer&id=<%= session.getAttribute("id")%>">Profile</a>
+                	<a href="ReservationController?action=listreservation&id=<%= session.getAttribute("id")%>">Reservation</a>
+                	<a href="rumahinfo.jsp">Gallery</a>
+                	<a href="about.jsp">About Us</a>
+                	<a href="CustomerController?action=logout">Log Out</a>
+                <%
+               		 } else {
+                %>
+                	<a href="HomestayController?action=listallhomestay" >Home</a>
+                	<a href="rumahinfo.jsp">Gallery</a>
+                	<a href="about.jsp">About Us</a>
+                	<a href="login.jsp?">Log In/Sign Up</a>
+                <%
+                }
+                %>
               </div>
             </header>
 
 			
 			<input type="hidden" name="id" value="<%= session.getAttribute("id")%>"/>
-            <section class="main banner">
+            <section class="main-banner">
             <div class="container-fluid">
               <div class="row">
               
                 <div class="column">
                     <div class="card">
-                        <h1><c:out value="${cust.username}"/></h1>
+                        <h1><c:out value="${cust.username}"/></h1><br>
                         <!-- <p class="title">CEO & Founder, Example  TUKAQQQQQQQ</p>
                         <p>Harvard University  TUKAQQQQQQQ</p> -->
-                        <p><a href="CustomerController?action=updateCustomer&id=<%= session.getAttribute("id")%>"><button>Update</button></a></p>
+                        <p><a href="CustomerController?action=updateCustomer&id=<%= session.getAttribute("id")%>"><button>Update Profile</button></a></p>
+                        <p><a href="CustomerController?action=updatePassword&id=<%= session.getAttribute("id")%>"><button>Update Password</button></a></p>
                       </div>
                 </div>
                 <div class="column-1">

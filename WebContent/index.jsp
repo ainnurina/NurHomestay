@@ -2,6 +2,8 @@
     pageEncoding="ISO-8859-1"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>  
 <!DOCTYPE html>
+
+
 <html lang="en">
   <head>
 
@@ -9,7 +11,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700" rel="stylesheet">
+    
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
 
     <title>Home</title>
 
@@ -19,6 +23,9 @@
     <!-- Additional CSS Files -->
   	<link rel="stylesheet" href="assets/css/templatemo-style.css">
   	<link rel="stylesheet" href="assets/css/fontawesome.css">
+  	
+  	
+  	<base>
   </head>
 
 <body class="is-preload">
@@ -30,28 +37,27 @@
             <!-- Header -->
             <header id="header">
               <div class="logo">
-                <a href="index.jsp"><img src="assets/images/logo nurhomestay6.png"></a>
+                <a href="index.jsp"><img src="assets/images/logo nurhomestay6.png" width="280"></a>
               </div>
               <div class="kemana-kita">
                 <%
                 	if(session.getAttribute("id") != null) {
                 %>
-                	<a href="index.jsp">Home</a>
+                	<script>
+                		alert("Succesful Login");
+                	</script>
+                	<a href="HomestayController?action=listallhomestay">Home</a>
                 	<a href="CustomerController?action=viewCustomer&id=<%= session.getAttribute("id")%>">Profile</a>
-                	<a href="reservation.jsp">Reservation</a>
+                	<a href="ReservationController?action=listreservation&id=<%= session.getAttribute("id")%>">Reservation</a>
                 	<a href="rumahinfo.jsp">Gallery</a>
                 	<a href="about.jsp">About Us</a>
                 	<a href="CustomerController?action=logout">Log Out</a>
-                <%
-               		 } else {
-                %>
-                	<a href="index.jsp" >Home</a>
-                	<a href="rumahinfo.jsp">Gallery</a>
+                <%} else {%>
+                	<a href="HomestayController?action=listallhomestay" >Home</a>
+                	<a href="HomestayController?action=listallhomestay2">Gallery</a>
                 	<a href="about.jsp">About Us</a>
                 	<a href="login.jsp?">Log In/Sign Up</a>
-                <%
-                }
-                %>
+                <% } %>
               </div>
             </header>
 
@@ -83,82 +89,21 @@
               
 
               <div style="margin-top: 30px">
-                  <div class=" nak-row-gak">
-                    Homestay<br>
-                    <select class="bolehla" name="homestay">
-                      <option value="">Choose Homestay</option>
-                      <c:forEach items="${homestays}" var="homestay">
-                      <option value="<c:out value="${homestay.home_name}" />"><c:out value="${homestay.home_name}" /></option>
-                      </c:forEach>
-                    </select>
-                  </div>
-                  <div class="nak-row-gak">
-                    Day<br>
-                      <input class="bolehla" type="number" name="days" min="1" max="30" placeholder="1" form="main-form"/>
-                  </div>
+              <form id="form-book" action="HomestayController?action=checkAvailable" method="post">
                   <div class=" nak-row-gak">
                     Check-in<br>
-                    <input class="bolehla"  type="date" name="checkindate" placeholder="1" form="main-form"/>
+                    <input class="bolehla"  type="date" name="checkindate" placeholder="1" min="2021-07-13" required/>
                   </div>
                   <div class=" nak-row-gak">
                     Check-out<br>
-                    <input class="bolehla"  type="date" name="checkindate" placeholder="1" form="main-form" />
+                    <input class="bolehla"  type="date" name="checkoutdate" placeholder="1" min="2021-07-14"  required/>
                   </div>
                   <div class="nak-row-gak" align="center" style="width:300px; margin: auto">
-                  <button type="submit" name="check" form="main-form">Check Avalibility</button>
+                  <button type="submit" name="check">Check Availability</button>
                   </div>
+                 </form>
             </div>
             </section>
-            
-            <!--Services
-            <section class="services">
-              <div class="container-fluid">
-                <div class="row">
-                  <div class="col-md-4">
-                    <div class="service-item first-item">
-                      <div class="icon"></div>
-                      <h4>Room</h4>
-                      <p>4 bedrooms with all air-conditioned</p><br>
-                    </div>
-                  </div>
-                  <div class="col-md-4">
-                    <div class="service-item second-item">
-                      <div class="icon"></div>
-                      <h4>Kitchen</h4>
-                      <p>Provides the needs of a fully equipped kitchen.</p><br>
-                    </div>
-                  </div>
-                  <div class="col-md-4">
-                    <div class="service-item third-item">
-                      <div class="icon"></div>
-                      <h4>Astro</h4>
-                      <p>LED TV with ASTRO Njoi and dvd set at the living room</p>
-                    </div>
-                  </div>
-                  <div class="col-md-4">
-                    <div class="service-item fourth-item">
-                      <div class="icon"></div>
-                      <h4>Garage</h4>
-                      <p>Provides a lounge area in the garage</p><br>
-                    </div>
-                  </div>
-                  <div class="col-md-4">
-                    <div class="service-item fivth-item">
-                      <div class="icon"></div>
-                      <h4>Toilet</h4>
-                      <p>All toilets complete with water-heater</p><br>
-                    </div>
-                  </div>
-                  <div class="col-md-4">
-                    <div class="service-item sixth-item">
-                      <div class="icon"></div>
-                      <h4>Check-in and check-out hour </h4>
-                      <p>Check-in: 2.00pm and above<br>Check-out: before 12.00pm</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </section> -->
             
             
 

@@ -10,7 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
 
     <title>Sign Up</title>
 
@@ -21,6 +21,21 @@
     <link rel="stylesheet" href="assets/css/fontawesome.css">
     <link rel="stylesheet" href="assets/css/templatemo-style.css">
 
+
+	<script type="text/Javascript">
+  		
+  		function check_pass() {
+  			if (document.getElementById('password').value == document.getElementById('confirm').value) {
+	  		    document.getElementById('submit').disabled = false;
+	  		}
+	  		else {
+  	  		    alert('The new password and confirm password does not match.')
+  				location.reload();
+  		        document.getElementById('submit').disabled = true;
+	  		}
+  		}
+  		</script>
+  		
   </head>
 
 <body class="is-preload">
@@ -35,7 +50,7 @@
             <!-- Header -->
             <header id="header">
               <div class="logo">
-                <a href="index.jsp"><img src="assets/images/logo nurhomestay6.png"></a>
+                <a href="index.jsp"><img src="assets/images/logo nurhomestay6.png" width="280"></a>
               </div>
               <div class="kemana-kita">
                 <a href="index.jsp">Home</a>
@@ -51,7 +66,7 @@
                 <div class="row">
                   <div class="col-md-12">
                     <div class="section-heading">
-                      <p><a href="signup.jsp">Back</a></p>
+                      <p><a href="login.jsp">Back</a></p>
                     <h2>Sign Up</h2>
                     </div>
                     <form id="signup" name="signup" action="CustomerController?action=signup" method="post">
@@ -68,22 +83,22 @@
                         </div>
                         <div class="col-md-6">
                           <fieldset>
-                            <input type="text" class="form-control" id="cust_email" name="cust_email" placeholder="Email" required="">
+                            <input type="email" class="form-control" id="cust_email" name="cust_email" placeholder="Email" required="">
                           </fieldset>
                         </div>
                         <div class="col-md-6">
                           <fieldset>
-                            <input type="password" class="form-control" id="password" name="password" placeholder="Password" onChange="onChange()" required="">
+                            <input type="password" class="form-control" id="password" name="password" placeholder="Password" required="">
                           </fieldset>
                         </div>
                         <div class="col-md-6">
                           <fieldset>
-                            <input type="text" class="form-control" id="cust_phoneNo" name="cust_phoneNo" placeholder="Phone Number" required="">
+                            <input type="number" class="form-control" id="cust_phoneNo" name="cust_phoneNo" placeholder="Phone Number" required="">
                           </fieldset>
                         </div>
                         <div class="col-md-6">
                           <fieldset>
-                            <input type="password" class="form-control" id="confirm" name="confirm" placeholder="Confirm Password" onChange="onChange()" required="">
+                            <input type="password" class="form-control" id="confirm" name="confirm" placeholder="Confirm Password" onChange="check_pass()" required="">
                           </fieldset>
                         </div>
                         <div class="col-12">
@@ -98,6 +113,7 @@
                 </div>
               </div>
             </section>
+             
             
           </div>
         </div>

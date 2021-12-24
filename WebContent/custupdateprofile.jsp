@@ -9,8 +9,8 @@
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
       <meta name="description" content="">
       <meta name="author" content="">
-      <link rel="preconnect" href="https://fonts.gstatic.com">
-      <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
   
       <title>Update Profile</title>
   
@@ -20,7 +20,9 @@
       <!-- Additional CSS Files -->
       <link rel="stylesheet" href="assets/css/fontawesome.css">
       <link rel="stylesheet" href="assets/css/templatemo-style.css">
-  
+     
+	
+
     </head>
   
     <body class="is-preload">
@@ -35,15 +37,34 @@
               <!-- Header -->
             <header id="header">
               <div class="logo">
-                <a href="index.jsp"><img src="assets/images/logo nurhomestay6.png"></a>
+                <a href="index.jsp"><img src="assets/images/logo nurhomestay6.png" width="280"></a>
               </div>
               <div class="kemana-kita">
-                <a href="index.jsp">Home</a>
-                <a href="CustomerController?action=viewCustomer&id=<%= session.getAttribute("id")%>">Profile</a>
-                <a href="reservation.jsp">Reservation</a>
-                <a href="rumahinfo.jsp">Gallery</a>
-                <a href="about.jsp">About Us</a>
-                <a href="CustomerController?action=logout">Log Out</a>
+                 <%
+                	if(session.getAttribute("id") != null) {
+                %>
+                <script type = "text/javascript">  
+            	function fun() {  
+ 
+               	alert ("Successfully updated");  
+            	}  
+     			</script>  
+                	<a href="index.jsp">Home</a>
+                	<a href="CustomerController?action=viewCustomer&id=<%= session.getAttribute("id")%>">Profile</a>
+                	<a href="ReservationController?action=listreservation&id=<%= session.getAttribute("id")%>">Reservation</a>
+                	<a href="HomestayController?action=infohomestay">Gallery</a>
+                	<a href="about.jsp">About Us</a>
+                	<a href="CustomerController?action=logout">Log Out</a>
+                <%
+               		 } else {
+                %>
+                	<a href="HomestayController?action=listallhomestay" >Home</a>
+                	<a href="HomestayController?action=infohomestay">Gallery</a>
+                	<a href="about.jsp">About Us</a>
+                	<a href="login.jsp?">Log In/Sign Up</a>
+                <%
+                }
+                %>
               </div>
             </header>
             
@@ -78,7 +99,7 @@
                           <tr>
                               <td class="labelsize"><label>Phone No</label></td>
                               <td class="double-dot">:</td>
-                              <td><input name="cust_phoneNo" type="text" class="form-control" placeholder="Email" value="<c:out value="${cust.cust_phoneNo}" />" required></td>
+                              <td><input name="cust_phoneNo" type="number" class="form-control" placeholder="Phone Number" value="<c:out value="${cust.cust_phoneNo}" />" required></td>
                           </tr>
                           <tr>
                               <td class="labelsize"><label>Address</label></td>
@@ -88,26 +109,11 @@
                           <tr>
                               <td class="labelsize"><label>Email</label></td>
                               <td class="double-dot">:</td>
-                              <td><input name="cust_email" type="text" class="form-control"  placeholder="Email" value="<c:out value="${cust.cust_email}" />" required></td>
+                              <td><input name="cust_email" type="email" class="form-control"  placeholder="Email" value="<c:out value="${cust.cust_email}" />" required></td>
                           </tr>
-                          <tr>
-                            <td class="labelsize"><label>Current Password</label></td>
-                            <td class="double-dot">:</td>
-                            <td><input name="password" type="password" class="form-control" id="name" placeholder="Password" value="<c:out value="${cust.password}" />" required></td>
-                        </tr>
-                        <tr>
-                            <td class="labelsize"><label>New Password</label></td>
-                            <td class="double-dot">:</td>
-                            <td><input name="password" type="password" class="form-control" id="name" placeholder="Password" required></td>
-                        </tr>
-                        <tr>
-                            <td class="labelsize"><label>Confirm Password</label></td>
-                            <td class="double-dot">:</td>
-                            <td><input name="password" type="password" class="form-control" id="name" placeholder="Password" required></td>
-                        </tr>
                       </table>
-                      <br><br>
-                      <center><button>Update</button></center>
+                      <br/><br/><br/><br/>
+                      <center><button type="submit" onclick = "fun();"/> Update</button></center>
                     </form>
                   </div></div></div>
                   </section>
@@ -118,7 +124,7 @@
       <div class="footer">
           Instagram<br><br>
           Facebook<br><br>
-          <br><br><br>
+          <br>
           &#169; 2020 Pilot. All rights reserved
       </div>
   

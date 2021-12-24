@@ -1,10 +1,17 @@
-@import url('https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
 
 body {
-	font-family: 'Fira Sans', sans-serif;
+	font-family: 'Lato', sans-serif;
+	font-size: 15px;
+	margin: 0px;
 }
 
 /* Basic */
+
+img {
+	width: 100%;
+	overflow: hidden;
+}
 
 input, select, textarea {
 	outline: none;
@@ -16,23 +23,17 @@ a:hover {
 }
 
 p {
-	font-size: 14px;
+	font-size: 15px;
 	line-height: 25px;
-	color: #7a7a7a;
 	letter-spacing: 0.2px;
 }
 
 h4 {
 	font-size: 19px;
 	font-weight: 700;
-	color: #31323a;
 	letter-spacing: 0.25px;
 }
 
-img {
-	width: 100%;
-	overflow: hidden;
-}
 
 /*customized input*/
 .bolehla, option {
@@ -70,7 +71,7 @@ select {
 
 .primary-button a,
 button {
-	font-size: 14px;
+	font-size: 15px;
 	font-weight: 700;
 	text-transform: uppercase;
     background-color: #535ba0;
@@ -371,7 +372,7 @@ section.contact-form {
 }
 
 .contact-form input {
-    font-size: 14px;
+    font-size: 15px;
     color: #7a7a7a;
     width: 100%;
     height: 50px;
@@ -390,7 +391,7 @@ section.contact-form {
 }
 
 .contact-form textarea {
-    font-size: 14px;
+    font-size: 15px;
     color: #7a7a7a;
     width: 100%;
     max-width: 100%;
@@ -411,7 +412,7 @@ section.contact-form {
 }
 
 .contact-form button {
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 700;
     text-transform: uppercase;
     display: inline-block;
@@ -564,7 +565,7 @@ ul.table-pagination li a {
     min-width: 40px;
     color: #4a4a4a;
     text-transform: uppercase;
-    font-size: 13px;
+    font-size: 14px;
     transition: all 0.5s;
 }
 
@@ -588,7 +589,7 @@ section.forms .container-fluid {
 
 .forms input,
 .forms select {
-    font-size: 14px;
+    font-size: 15px;
     color: #7a7a7a;
     width: 100%;
     height: 50px;
@@ -601,7 +602,7 @@ section.forms .container-fluid {
 }
 
 .forms textarea {
-    font-size: 14px;
+    font-size: 15px;
     color: #7a7a7a;
     width: 100%;
     height: 160px;
@@ -646,7 +647,7 @@ input[type="radio"] + label {
     text-decoration: none;
     cursor: pointer;
     display: inline-block;
-    font-size: 14px;
+    font-size: 15px;
     letter-spacing: 0;
     text-transform: none;
     font-weight: 300;
@@ -723,7 +724,7 @@ section.buttons .container-fluid {
     margin-bottom: 30px;
 }
 .filled-rectangle-button a {
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 700;
     text-transform: uppercase;
     display: inline-block;
@@ -767,7 +768,7 @@ section.buttons .container-fluid {
     margin-bottom: 30px;
 }
 .filled-radius-button a {
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 700;
     text-transform: uppercase;
     display: inline-block;
@@ -790,7 +791,7 @@ section.buttons .container-fluid {
     margin-bottom: 30px;
 }
 .border-radius-button a {
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 700;
     text-transform: uppercase;
     display: inline-block;
@@ -813,7 +814,7 @@ section.buttons .container-fluid {
     margin-bottom: 30px;
 }
 .filled-rounded-button a {
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 700;
     text-transform: uppercase;
     display: inline-block;
@@ -836,7 +837,7 @@ section.buttons .container-fluid {
     margin-bottom: 30px;
 }
 .border-rounded-button a {
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 700;
     text-transform: uppercase;
     display: inline-block;
@@ -862,7 +863,7 @@ section.buttons .container-fluid {
     margin-right: 8px;
 }
 .filled-icon-button a {
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 700;
     text-transform: uppercase;
     display: inline-block;
@@ -888,7 +889,7 @@ section.buttons .container-fluid {
     margin-right: 8px;
 }
 .border-icon-button a {
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 700;
     text-transform: uppercase;
     display: inline-block;
@@ -940,281 +941,71 @@ section.buttons .container-fluid {
     margin-bottom: 50px;
 }
 
-/* Sidebar
 
-#sidebar {
-    -moz-flex-grow: 0;
-    -webkit-flex-grow: 0;
-    -ms-flex-grow: 0;
-    flex-grow: 0;
-    -moz-flex-shrink: 0;
-    -webkit-flex-shrink: 0;
-    -ms-flex-shrink: 0;
-    flex-shrink: 0;
-    -moz-transition: margin-left 0.5s ease, box-shadow 0.5s ease;
-    -webkit-transition: margin-left 0.5s ease, box-shadow 0.5s ease;
-    -ms-transition: margin-left 0.5s ease, box-shadow 0.5s ease;
-    transition: margin-left 0.5s ease, box-shadow 0.5s ease;
-    background-color: #24252d;
-    position: relative;
-}
-
-#sidebar > .inner {
-    position: relative;
-    width: 20%;
-}
-
-#sidebar > .inner > #search  {
-    background-color: #2d2e39;
-    height: 100px;
-    width: 350px;
-    display: inline-block;
-    margin-left: -50px;
-}
-#sidebar > .inner > #search input {
-	width: 100%;
-	height: 100px;
-	background-color: transparent;
-	border: none;
-	color: #fff;
-}
-
-#search form:before {
-	font-family: 'FontAwesome';
-    -moz-transform: scaleX(-1);
-    -webkit-transform: scaleX(-1);
-    -ms-transform: scaleX(-1);
-    transform: scaleX(-1);
-    color: #fff;
-    content: '\f002';
-    cursor: default;
-    display: block;
-    position: absolute;
-    right: 50px;
-    text-align: center;
-    top: 35px;
-    font-size: 18px;
-}
-
-#sidebar .toggle {
-    text-decoration: none;
-    -moz-transition: left 0.5s ease;
-    -webkit-transition: left 0.5s ease;
-    -ms-transition: left 0.5s ease;
-    transition: left 0.5s ease;
-    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
-    border: 0;
-    display: block;
-    color: #fff;
-    height: 100px;
-    left: 250px;
-    line-height: 100px;
-    outline: 0;
-    overflow: hidden;
-    position: absolute;
-    text-align: center;
-    text-indent: 100px;
-    top: 0;
-    width: 100px;
-    z-index: 10000;
-}
-
-#sidebar .toggle:before {
-    -moz-osx-font-smoothing: grayscale;
-    -webkit-font-smoothing: antialiased;
-    font-family: FontAwesome;
-    font-style: normal;
-    font-weight: normal;
-    text-transform: none !important;
-}
-
-#sidebar .toggle:before {
-    content: '\f0c9';
-    font-size: 2rem;
-    height: inherit;
-    left: 0;
-    line-height: inherit;
-    position: absolute;
-    text-indent: 0;
-    top: 0;
-    width: inherit;
-}
-
-#sidebar.inactive {
-    margin-left: -250px;
-}
-
-@media screen and (max-width: 1680px) {
-    #sidebar {
-        width: 380px;
-    }
-    #sidebar > .inner {
-        padding: 0px 30px;
-        width: 380px;
-    }
-    #sidebar .toggle {
-        height: 100px;
-        left: 380px;
-        line-height: 100px;
-    }
-    #sidebar .toggle:before {
-        font-size: 24px;
-    }
-    #sidebar.inactive {
-        margin-left: -380px;
-    }
-    #sidebar > .inner > #search  {
-	    width: 380px;
-	    margin-left: -30px;
-	}
-	#menu {
-		margin-top: 30px;
-	}
-	.featured-posts {
-		margin-left: -30px!important;
-		margin-right: -30px!important;
-		padding: 30px!important;
-	}
-}
-
-@media screen and (max-width: 1280px) {
-    #sidebar {
-        box-shadow: 0 0 5em 0 rgba(0, 0, 0, 0.175);
-        height: 100%;
-        left: 0;
-        position: fixed;
-        top: 0;
-        z-index: 10000;
-    }
-    #sidebar.inactive {
-        box-shadow: none;
-    }
-    #sidebar > .inner {
-        -webkit-overflow-scrolling: touch;
-        height: 100%;
-        left: 0;
-        overflow-x: hidden;
-        overflow-y: auto;
-        position: absolute;
-        top: 0;
-    }
-    #sidebar > .inner:after {
-        content: '';
-        display: block;
-        height: 4em;
-        width: 100%;
-    }
-    #sidebar .toggle {
-        width: 6em;
-    }
-    #sidebar .toggle:before {
-        font-size: 1.5rem;
-        color: #fff;
-        background-color: rgba(83,91,160,0.75);
-    }
-    body.is-preload #sidebar {
-        display: none;
-    }
-}
-
-@media screen and (max-width: 845px) {
-    #header .logo a, #header .kemana-kita a{
-        margin-right: 30px!important;
-    }
-	#main > .inner {
-	    padding: 15px;
-	}
-	#header {
-	    margin: -15px!important;
-	}
-	section.main-banner {
-		margin-top: 30px;
-	}
-    .page-heading h1 {
-        margin-top: 80px;
-    }
-    #sidebar .toggle {
-        text-indent: 8.25em;
-        width: 7.25em;
-    }
-    #sidebar .toggle:before {
-        color: #fff;
-        margin-left: -0.0855em;
-        margin-top: -0.25em;
-        font-size: 20px;
-        z-index: 1;
-    }
-    #sidebar .toggle:before {
-    	background-color: transparent;
-    }
-    #sidebar .toggle:after {
-        background: rgba(83, 91, 160, 0.90);
-        border-radius: 5px;
-        content: '';
-        height: 60px;
-        left: 15px;
-        position: absolute;
-        top: 15px;
-        width: 80px;
-    }
-    .left-image .right-content {
-    	margin-top: 40px;
-    	margin-left: 0px;
-    }
-    .right-image .left-content {
-    	margin-bottom: 40px;
-    	margin-right: 0px;
-    }
-    .main-banner {
-    	text-align: center;
-    }
-    .main-banner .banner-content .banner-caption {
-    	padding: 30px;
-    }
-    .contact-form button {
-        margin-bottom: 30px;
-    }
-}
-*/
-
+/* Fixed sidenav, full height */
 .sidenav {
-    height: 100%;
-    width: 0;
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    left: 0;
-    background-color: #24252d;
-    overflow-x: hidden;
-    transition: 0.5s;
-    padding-top: 60px;
-  }
-  
-  .sidenav a {
-    padding: 8px 8px 8px 32px;
-    text-decoration: none;
-    font-size: 17px;
-    color: #818181;
-    display: block;
-    transition: 0.3s;
-  }
-  
-  .sidenav a:hover {
-    color: #f1f1f1;
-  }
-  
-  .sidenav .closebtn {
-    position: absolute;
-    top: 0;
-    right: 25px;
-    font-size: 36px;
-    margin-left: 50px;
-  }
-  
-  @media screen and (max-height: 450px) {
-    .sidenav {padding-top: 15px;}
-    .sidenav a {font-size: 18px;}
-  }
+  height: 100%;
+  width: 200px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #24252d;
+  overflow-x: hidden;
+  padding-top: 60px;
+}
+
+/* Style the sidenav links and the dropdown button */
+.sidenav a, .dropdown-btn {
+  padding: 8px 8px 6px 32px;
+  text-decoration: none;
+  font-size: 17px;
+  color: #818181;
+  display: block;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  outline: none;
+}
+
+/* On mouse-over */
+.sidenav a:hover, .dropdown-btn:hover {
+  color: #f1f1f1;
+}
+
+/* Main content */
+.main {
+  margin-left: 200px; /* Same as the width of the sidenav */
+  font-size: 20px; /* Increased text to enable scrolling */
+  padding: 0px 10px;
+}
+
+/* Add an active class to the active dropdown button */
+.active {
+  background-color: #31323a;
+  color: white;
+}
+
+/* Dropdown container (hidden by default). Optional: add a lighter background color and some left padding to change the design of the dropdown content */
+.dropdown-container {
+  display: none;
+  background-color: #262626;
+  padding-left: 8px;
+}
+
+/* Optional: Style the caret down icon */
+.fa-caret-down {
+  float: right;
+  padding-right: 8px;
+}
+
+/* Some media queries for responsiveness */
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
 
 /* Featured Post */
 
@@ -1308,7 +1099,7 @@ section.buttons .container-fluid {
 }
 
 #header .kemana-kita a {
-    font-size: 14px;
+    font-size: 15px;
     text-transform: uppercase;
     letter-spacing: 1px;
     color: #fff;
@@ -1316,20 +1107,6 @@ section.buttons .container-fluid {
     /*margin: auto;*/
     padding-right: 30px;
 }
-
-/* Footer */
-
-/*#footer .copyright {
-	text-align: center;
-    color: #fff;
-    font-size: 14px;
-    margin-top: 50px;
-}
-
-#footer .copyright p {
-	margin-bottom: 0px;
-}
-*/
 
 /* Menu */
 #menu {
@@ -1451,6 +1228,11 @@ section.buttons .container-fluid {
     padding-top: 0;
 }
 
+.ubahsize{
+    width: 50%;
+    overflow: hidden;
+}
+
 /*about me*/
 section {
   padding: 40px 120px;
@@ -1518,7 +1300,7 @@ div.footer {
     background: #3E3E3F;
     margin-top: 20px;
     color: #AAAAAA;
-    font-size: 11px;
+    font-size: 14px;
     height: 200px;
   }
 
@@ -1593,8 +1375,7 @@ div.footer {
   
   /* image for content */
   .useme { 
-    width:30px;
-    height: 30px;
+    width:40px;
     float: right;
   }
 

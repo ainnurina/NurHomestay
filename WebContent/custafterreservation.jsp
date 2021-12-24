@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>  
+    <%@ page import="java.util.*" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,7 +11,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
 
     <title>Reservation</title>
 
@@ -20,12 +22,21 @@
     <link rel="stylesheet" href="assets/css/fontawesome.css">
     <link rel="stylesheet" href="assets/css/templatemo-style.css">
 
+	<!-- 
     <script type="text/Javascript">
      function redirect() {
-      var myWindow = window.open("payment.jsp", "", "width=400,height=600");
+    	 var home_id = document.getElementById("home_id").value;
+    	 var home_name = document.getElementById("home_name").value;
+    	 var totalpay = document.getElementById("totalpay").value;
+    	 var checkin = document.getElementById("checkin").value;
+    	 var checkout = document.getElementById("checkout").value;
+    	 var checkAgree = document.getElementById("checkAgree").value;
+    	 var status = document.getElementById("status").value;
+    	 
+      	 var myWindow = window.open("payment.jsp, "", "width=400,height=600");
      }
-
     </script>
+    -->
   </head>
 
   <body class="is-preload">
@@ -40,14 +51,28 @@
             <!-- Header -->
             <header id="header">
               <div class="logo">
-                <a href="index.jsp"><img src="assets/images/logo nurhomestay6.png"></a>
+                <a href="index.jsp"><img src="assets/images/logo nurhomestay6.png" width="280"></a>
               </div>
               <div class="kemana-kita">
-                <a href="afterindex.jsp">Home</a>
-                <a href="custprofile.jsp">Profile</a>
-                <a href="reservation.jsp">Reservation</a>
-                <a href="afterabout.jsp">About Us</a>
-                <a href="index.jsp">Logout</a>
+                <%
+                	if(session.getAttribute("id") != null) {
+                %>
+                	<a href="HomestayController?action=listallhomestay">Home</a>
+                	<a href="CustomerController?action=viewCustomer&id=<%= session.getAttribute("id")%>">Profile</a>
+                	<a href="ReservationController?action=listreservation&id=<%= session.getAttribute("id")%>">Reservation</a>
+                	<a href="rumahinfo.jsp">Gallery</a>
+                	<a href="about.jsp">About Us</a>
+                	<a href="CustomerController?action=logout">Log Out</a>
+                <%
+               		 } else {
+                %>
+                	<a href="HomestayController?action=listallhomestay" >Home</a>
+                	<a href="rumahinfo.jsp">Gallery</a>
+                	<a href="about.jsp">About Us</a>
+                	<a href="login.jsp?">Log In/Sign Up</a>
+                <%
+                }
+                %>
               </div>
             </header>
 
@@ -57,66 +82,83 @@
                 </div>
             </section>
             
-            <form onsubmit="return">
+            <!-- onsubmit="return"-->
+            
+            <form name="addreservation" action="PaymentController?action=payReservation&id=<%= session.getAttribute("id")%>" method="post">
+            <!--  <form name="addreservation" onsubmit="return redirect()">-->
             <section class="main-banner">
               <div class="container-fluid">
                 <div class="row">
                   <div class="column">
-                    <img class="rounded-circle" src="assets/images/main-banner.jpg">
+                    <h2><c:out value="${homestay.home_name}" /></h2>
                   </div>
                   <div class="column-1">
+                  <input type="hidden" name="cid" id="cid" value="<%= session.getAttribute("id")%>">
+                  <input type="hidden" name="home_id" id="home_id" value="<c:out value="${homestay.homestayId}" />">
                     <table>
-                      <tr>
-                          <td class="labelsize"><label>Reservation</label></td>
-                          <td class="double-dot">:</td>
-                          <td>25 December 2020</td>
-                      </tr>
                       <tr>
                           <td class="labelsize"><label>Branch</label></td>
                           <td class="double-dot">:</td>
-                          <td><select name="homestay">
-                            <option value="">Choose Homestay</option>
-                            <option value="Taman Pokok Manga 1">Taman Pokok Manga 1</option>
-                            <option value="Taman Pokok Manga 2">Taman Pokok Manga 2</option>
-                            <option value="Taman Pandan Murni">Taman Pandan Murni</option>
-                            <option value="Taman Pandan Indah">Taman Pandan Indah</option>
-                          </select></td>
-                      </tr>
-                      <tr>
-                          <td class="labelsize"><label>Total Payment</label></td>
-                          <td class="double-dot">:</td>
-                          <td>RM 500.00</td>
+                          <td><input type="hidden" name="home_name" id="home_name" value="<c:out value="${homestay.home_name}" />"><c:out value="${homestay.home_name}" /></td>
                       </tr>
                       <tr>
                           <td class="labelsize"><label>Check In</label></td>
                           <td class="double-dot">:</td>
-                          <td><input type="datetime-local" name="checkin"></td>
+                          <td><input type="hidden" name="checkin" id="checkin" value="<c:out value="${checkindate}" />"><c:out value="${checkindate}" /></td>
                       </tr>
                       <tr>
                           <td class="labelsize"><label>Check Out</label></td>
                           <td class="double-dot">:</td>
-                          <td><input type="datetime-local" name="checkout"></td> 
+                          <td><input type="hidden" name="checkout" id="checkout" value="<c:out value="${checkoutdate}" />"><c:out value="${checkoutdate}" /></td> 
+                      </tr>
+                      <tr>
+                          <td class="labelsize"><label>Day</label></td>
+                          <td class="double-dot">:</td>
+                          <td><input type="hidden" name="day" id="day" value="<c:out value="${day}" />"><c:out value="${day}" /> day(s)</td>
+                      </tr>
+                      <tr>
+                          <td class="labelsize"><label>Deposit (RM)</label></td>
+                          <td class="double-dot">:</td>
+                          <td><input type="hidden" name="home_deposit" id="home_deposit" value="<c:out value="${homestay.home_deposit}" />"><c:out value="${home_deposit2}" /></td>
+                      </tr>
+                      <tr>
+                          <td class="labelsize"><label>Homestay's price per day (RM)</label></td>
+                          <td class="double-dot">:</td>
+                          <td><input type="hidden" name="home_price" id="home_price" value="<c:out value="${homestay.home_price}" />"><c:out value="${home_price2}" /></td>
+                      </tr>
+                      <tr>
+                          <td class="labelsize"><label>Total Payment (RM)</label></td>
+                          <td class="double-dot">:</td>
+                          <td><input type="hidden" name="totalpay" id="totalpay" value="<c:out value="${totprice}" />">
+                          		RM <c:out value="${home_deposit2}" /> + (RM <c:out value="${home_price2}" /> * <c:out value="${day}" />)<br/>
+                          		= RM <c:out value="${totprice}" />
+                          </td>
+                      </tr>
+                      <tr>
+                          <td class="labelsize"><label>Method</label></td>
+                          <td class="double-dot">:</td>
+                          <td>
+							  <select name="method" id="method">
+							    <option value="onlinepay">Online Banking</option>
+							    <option value="cash">Cash</option>
+							  </select>
+                          </td>
                       </tr>
                       <tr align="center">
-                          <td colspan="3" align="left"><blockquote>Kaklong angah adik kakak semua makan kuih raya Kaklong angah adik 
-                            kakak semua makan kuih raya Kaklong angah adik kakak semua makan kuih raya
-                            Kaklong angah adik kakak semua makan kuih raya
-                            Kaklong angah adik kakak semua makan kuih raya
-                            Kaklong angah adik kakak semua makan kuih raya
-                            Kaklong angah adik kakak semua makan kuih raya
-                            Kaklong angah adik kakak semua makan kuih raya
-                            Kaklong angah adik kakak semua makan kuih raya
-                            Kaklong angah adik kakak semua makan kuih raya
-                            Kaklong angah adik kakak semua makan kuih raya
-                          </blockquote><br>
-                            <p><input type="checkbox" value="Agree">Agree to terms & condition</p></td>
+                          <td colspan="3" align="left">
+                          	<a href="ribbib.pdf" target="_blank">View Term and Condition</a><br>
+                            <p><input type="checkbox" name="checkAgree" id="checkAgree" value="Agree" required/>Agree to the term and conditions</p>
+                            <input type="hidden" name="status" id="status" value="not paid"/>
+                          </td>
                       </tr>
+                      
                   </table><br>
-                <center><a href="#"><button>Pay</button></a><a href="#"><button>Cancel</button></a></center>
+                <button type="submit" href="HomestayController?action=listallhomestay">Pay</button>
+                <button><a href="index.jsp" style="color: inherit;">Cancel</a></button>
                  <!-- onclick="redirect(); -->
                   </div>
-              </div></section></form>
-    
+              </div></div></section></form>
+    	
           </div>
         </div>
     </div>
